@@ -13,7 +13,7 @@
 
     parameters:
       - name: epochs
-        type: int
+        type: integer
         pass-as: --epochs={v}
         default: 100
         description: Number of epochs of training
