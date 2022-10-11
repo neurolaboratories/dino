@@ -51,8 +51,8 @@
       pass-as: --patch-size={v}
       default: 16
       description: Size in pixels of input square patches - default 16 (for 16x16 patches)
-      name: output-dim
-      type: integer
-      pass-as: --out-dim={v}
-      default: 65536
-      description: Dimensionality of the DINO head output.
+      # name: output-dim
+      # type: integer
+      # pass-as: --out-dim={v}
+      # default: 65536
+      # description: Dimensionality of the DINO head output.
