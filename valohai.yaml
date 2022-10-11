@@ -5,4 +5,55 @@
       - mkdir /valohai/inputs/data/
       - mkdir /valohai/inputs/model/
       - mkdir /valohai/outputs/models/
-      - python -m torch.distributed.launch --nproc_per_node=8 main_dino.py --arch vit_small --data_path/valohai/inputs/data --output_dir /valohai/outputs/models/
+      - python -m torch.distributed.launch --nproc_per_node=8 main_dino.py {parameters}
+
+    inputs:
+      - name: dataset
+        default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
+
+    parameters:
+      name: epochs
+      type: int
+      pass-as: --epochs={v}
+      default: 100
+      description: Number of epochs of training
+      name: lr
+      type: float
+      pass-as: --lr={v}
+      default: 0.0005
+      description: learning rate at the end of the linear warmup.
+      name: min-lr
+      type: float
+      pass-as: --min-lr={v}
+      default: 0.000001
+      description: Target LR at the end of optimization. We use a cosine LR schedule with linear warmup    
+      name: optimizer
+      type: string
+      pass-as: --optimizer={v}
+      default: adamw
+      description: Type of optimizer. We recommend using adamw with ViTs. Choices [adamw, sgd, lars].
+      name: data-path
+      type: string
+      pass-as: --data-path={v}
+      description: path to input data.
+      default: /valohai/inputs/data/dataset
+      name: output-dir
+      type: string
+      pass-as: --output-dir={v}
+      description: path to output directory.
+      name: architecture
+      type: string
+      pass-as: --arch={v}
+      default: vit_small
+      description: model architecture used for training.
+      name: patch-size
+      type: integer
+      pass-as: --patch-size={v}
+      default: 16
+      description: Size in pixels of input square patches - default 16 (for 16x16 patches)
+      name: output-dim
+      type: integer
+      pass-as: --out_dim={v}
+      default: 65536
+      description: Dimensionality of the DINO head output.
+
