@@ -10,7 +10,7 @@
     
     inputs:
       - name: data
-        default: 
+        default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
     parameters:
       - name: epochs
         type: integer
