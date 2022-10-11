@@ -17,6 +17,11 @@
         pass-as: --epochs={v}
         default: 100
         description: Number of epochs of training
+      - name: warmup-epochs
+        type: integer
+        pass-as: --warmup_epochs={v}
+        default: 10
+        description: Number of epochs of training
       - name: lr
         type: float
         pass-as: --lr={v}
