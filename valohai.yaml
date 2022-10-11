@@ -6,7 +6,7 @@
       - mkdir /valohai/inputs/model/
       - mkdir /valohai/outputs/models/
       - python untar_archives.py --input_path /valohai/inputs/data
-      - python -m torch.distributed.launch --nproc_per_node=1 main_dino.py {parameters}
+      - python -m torch.distributed.launch --nproc_per_node={parameter-value:num_gpus} main_dino.py {parameters}
     
     inputs:
       - name: data
@@ -41,6 +41,7 @@
         type: string
         pass-as: --output_dir={v}
         description: path to output directory.
+        default: /valohai/outputs/
       - name: architecture
         type: string
         pass-as: --arch={v}
@@ -60,7 +61,10 @@
         type: integer
         pass-as: --batch_size_per_gpu={v}
         description: Batch size per GPU.
-      
+      - name: num_gpus
+        type: integer
+        default: 1
+        description: number of gpus for distributed training
 - step:
     name: convert_coco_to_image_folder
     image: neurolabszia.azurecr.io/valohai-zia-vision:phase3-multi-gpu-training-gpu
