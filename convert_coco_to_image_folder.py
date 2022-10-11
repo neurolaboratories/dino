@@ -6,7 +6,7 @@ from PIL import Image
 parser = argparse.ArgumentParser(description="Convert COCO dataset to ImageFolder")
 
 parser.add_argument("--coco_dataset_path", type=str)
-parser.add_argument("--dataset_type", type=str, choices=["train", "test"])
+parser.add_argument("--dataset_type", type=str, choices=["train", "test", "all"])
 parser.add_argument("--image_folder_output_path", type=str)
 
 args = parser.parse_args()
@@ -14,15 +14,18 @@ args = parser.parse_args()
 path_to_coco = Path(args.coco_dataset_path)
 
 coco_json_filenames = ["coco_train.json", "coco_val.json"]
-output_folder = ["train", "val"]
+output_folder = "train"
+
+if args.dataset_type == "all":
+    coco_json_filenames = ["coco_all.json"]
 
 if args.dataset_type == "test":
     coco_json_filenames = ["coco_test.json"]
-    output_folder = ["test"]
+    output_folder = "test"
 
 dataset_ouptut_path = Path(args.image_folder_output_path)
 
-for coco_json_filename, output_folder in zip(coco_json_filenames, output_folder):
+for coco_json_filename in coco_json_filenames:
 
     with open(path_to_coco / coco_json_filename, "r") as coco_file:
         coco_json = json.load(coco_file)
@@ -37,6 +40,9 @@ for coco_json_filename, output_folder in zip(coco_json_filenames, output_folder)
 
     for annotation in coco_json["annotations"]:
         coco_bbox = annotation["bbox"]
+
+        if coco_bbox[2] == 0.0 or coco_bbox[3] == 0.0:
+            continue
 
         category_name = category_id_to_name_dict[annotation["category_id"]]
         image_filename = Path(image_id_to_name_dict[annotation["image_id"]])
