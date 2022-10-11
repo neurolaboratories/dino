@@ -56,7 +56,11 @@
         pass-as: --out_dim={v}
         default: 65536
         description: Dimensionality of the DINO head output.
-
+      - name: batch_size_per_gpus
+        type: integer
+        pass-as: --batch_size_per_gpu={v}
+        description: Batch size per GPU.
+      
 - step:
     name: convert_coco_to_image_folder
     image: neurolabszia.azurecr.io/valohai-zia-vision:phase3-multi-gpu-training-gpu
