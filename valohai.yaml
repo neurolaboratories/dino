@@ -72,10 +72,10 @@
     
     parameters:
       - name: Data path
-          type: string
-          pass-as: --coco_dataset_path={v}
-          description: path to input data.
-          default: /valohai/inputs/data/dataset/dataset/
+        type: string
+        pass-as: --coco_dataset_path={v}
+        description: path to input data.
+        default: /valohai/inputs/data/dataset/dataset/
       - name: Dataset type
         type: string
         pass-as: --dataset_type={v}
