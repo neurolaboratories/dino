@@ -5,6 +5,7 @@
       - mkdir /valohai/inputs/data/
       - mkdir /valohai/inputs/model/
       - mkdir /valohai/outputs/models/
+      - pyrhon convert_coco_to_image_folder.py --coco_dataset_path /valohai/inputs/data/dataset/coco_train.json --coco_json_filename coco_train.json --image_folder_output_path /valoha/inputs/data/dataset
       - python -m torch.distributed.launch --nproc_per_node=8 main_dino.py {parameters}
 
     inputs:
@@ -24,7 +25,7 @@
         description: learning rate at the end of the linear warmup.
       - name: min-lr
         type: float
-        pass-as: --min-lr={v}
+        pass-as: --min_lr={v}
         default: 0.000001
         description: Target LR at the end of optimization. We use a cosine LR schedule with linear warmup    
       - name: optimizer
@@ -34,12 +35,12 @@
         description: Type of optimizer. We recommend using adamw with ViTs. Choices [adamw, sgd, lars].
       - name: data-path
         type: string
-        pass-as: --data-path={v}
+        pass-as: --data_path={v}
         description: path to input data.
         default: /valohai/inputs/data/dataset
       - name: output-dir
         type: string
-        pass-as: --output-dir={v}
+        pass-as: --output_dir={v}
         description: path to output directory.
       - name: architecture
         type: string
@@ -48,11 +49,11 @@
         description: model architecture used for training.
       - name: patch-size
         type: integer
-        pass-as: --patch-size={v}
+        pass-as: --patch_size={v}
         default: 16
         description: Size in pixels of input square patches - default 16 (for 16x16 patches)
       - name: output-dim
         type: integer
-        pass-as: --out-dim={v}
+        pass-as: --out_dim={v}
         default: 65536
         description: Dimensionality of the DINO head output.
