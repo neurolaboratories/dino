@@ -6,9 +6,8 @@
       - mkdir /valohai/inputs/model/
       - mkdir /valohai/outputs/models/
       - python untar_archives.py --input_path /valohai/inputs/data
-      - python convert_coco_to_image_folder.py --coco_dataset_path /valohai/inputs/data/dataset/coco_train.json --coco_json_filename coco_train.json --image_folder_output_path /valoha/inputs/data/dataset
-      - python -m torch.distributed.launch --nproc_per_node=8 main_dino.py {parameters}
-
+      - python convert_coco_to_image_folder.py --coco_dataset_path /valohai/inputs/data/dataset/ --coco_json_filename coco_train.json --image_folder_output_path /valohai/inputs/data/dataset
+      - python main_dino.py {parameters}
     inputs:
       - name: dataset
         default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
