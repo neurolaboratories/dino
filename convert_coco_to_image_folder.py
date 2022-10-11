@@ -2,7 +2,7 @@ from pathlib import Path
 import argparse
 import json
 from PIL import Image
-
+from tqdm import tqdm
 parser = argparse.ArgumentParser(description="Convert COCO dataset to ImageFolder")
 
 parser.add_argument("--coco_dataset_path", type=str)
@@ -21,6 +21,20 @@ if args.dataset_type == "test":
     output_folder = ["test"]
 
 dataset_ouptut_path = Path(args.image_folder_output_path)
+
+def check_and_correct_bbox_annotations(img, bbox):
+    # check if the coordinates xmax, ymax are outside of the image and correct them
+    if (bbox[0] + bbox[2]) > img.size[0]:
+        bbox[2] = img.size[0] - bbox[0]
+    if (bbox[1] + bbox[3]) > img.size[1]:
+        bbox[3] = img.size[1] - bbox[1]
+    # check if the coordinates xmin, ymin are outside of the image and correct them
+    if bbox[0] > img.size[0]:
+        bbox[0] = img.size[0]
+    if bbox[1] > img.size[1]:
+        bbox[1] = img.size[1]
+    return bbox
+
 
 for coco_json_filename, output_folder in zip(coco_json_filenames, output_folder):
 
@@ -41,6 +55,7 @@ for coco_json_filename, output_folder in zip(coco_json_filenames, output_folder)
         category_name = category_id_to_name_dict[annotation["category_id"]]
         image_filename = Path(image_id_to_name_dict[annotation["image_id"]])
 
+        
         image_crop = Image.open(path_to_coco / "img" / image_filename).crop(
             (coco_bbox[0], coco_bbox[1], coco_bbox[0] + coco_bbox[2], coco_bbox[1] + coco_bbox[3])
         )
