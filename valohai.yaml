@@ -6,7 +6,7 @@
       - mkdir /valohai/inputs/model/
       - mkdir /valohai/outputs/models/
       - python untar_archives.py --input_path /valohai/inputs/data
-      - python main_dino.py {parameters}
+      - python -m torch.distributed.launch --nproc_per_node=1 main_dino.py {parameters}
     
     inputs:
       - name: data
