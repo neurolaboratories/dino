@@ -19,7 +19,6 @@ import time
 import math
 import json
 from pathlib import Path
-
 import numpy as np
 from PIL import Image
 import torch
@@ -275,6 +274,11 @@ def train_dino(args):
             data_loader, optimizer, lr_schedule, wd_schedule, momentum_schedule,
             epoch, fp16_scaler, args)
 
+        print(
+            json.dumps({
+                'epoch': epoch,
+                'train_loss': dino_loss.item()
+            }))
         # ============ writing logs ... ============
         save_dict = {
             'student': student.state_dict(),
