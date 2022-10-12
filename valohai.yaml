@@ -6,18 +6,21 @@
       - mkdir /valohai/inputs/model/
       - mkdir /valohai/outputs/models/
       - python untar_archives.py --input_path /valohai/inputs/data
-      - python convert_coco_to_image_folder.py --coco_dataset_path /valohai/inputs/data/dataset/coco_train.json --coco_json_filename coco_train.json --image_folder_output_path /valoha/inputs/data/dataset
-      - python -m torch.distributed.launch --nproc_per_node=8 main_dino.py {parameters}
-
+      - python -m torch.distributed.launch --nproc_per_node={parameter-value:num_gpus} main_dino.py {parameters}
+    
     inputs:
-      - name: dataset
+      - name: data
         default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
-
     parameters:
       - name: epochs
         type: integer
         pass-as: --epochs={v}
         default: 100
+        description: Number of epochs of training
+      - name: warmup-epochs
+        type: integer
+        pass-as: --warmup_epochs={v}
+        default: 10
         description: Number of epochs of training
       - name: lr
         type: float
@@ -38,11 +41,12 @@
         type: string
         pass-as: --data_path={v}
         description: path to input data.
-        default: /valohai/inputs/data/dataset
+        default: /valohai/inputs/data/dataset/train
       - name: output-dir
         type: string
         pass-as: --output_dir={v}
         description: path to output directory.
+        default: /valohai/outputs/
       - name: architecture
         type: string
         pass-as: --arch={v}
@@ -58,7 +62,14 @@
         pass-as: --out_dim={v}
         default: 65536
         description: Dimensionality of the DINO head output.
-
+      - name: batch_size_per_gpus
+        type: integer
+        pass-as: --batch_size_per_gpu={v}
+        description: Batch size per GPU.
+      - name: num_gpus
+        type: integer
+        default: 1
+        description: number of gpus for distributed training
 - step:
     name: convert_coco_to_image_folder
     image: neurolabszia.azurecr.io/valohai-zia-vision:phase3-multi-gpu-training-gpu

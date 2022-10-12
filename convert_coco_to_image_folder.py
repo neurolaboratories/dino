@@ -2,6 +2,7 @@ from pathlib import Path
 import argparse
 import json
 from PIL import Image
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description="Convert COCO dataset to ImageFolder")
 
