@@ -277,7 +277,7 @@ def train_dino(args):
         print(
             json.dumps({
                 'epoch': epoch,
-                'train_loss': dino_loss.item()
+                'train_loss': dino_loss.total_loss.item()
             }))
         # ============ writing logs ... ============
         save_dict = {
