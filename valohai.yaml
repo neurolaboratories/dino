@@ -76,24 +76,25 @@
     command:
       - tar -xf /valohai/inputs/data/dataset/*.tar.gz -C /valohai/inputs/data/dataset/
       - python convert_coco_to_image_folder.py {parameters}
+      - tar -czvf /valohai/outputs/output_image_folder.tar.gz {parameter-value:img_folder_output_path}* --remove-files
 
     inputs:
       - name: dataset
         default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
     
     parameters:
-      - name: Data path
+      - name: data_path
         type: string
         pass-as: --coco_dataset_path={v}
         description: path to input data.
         default: /valohai/inputs/data/dataset/dataset/
-      - name: Dataset type
+      - name: dataset_type
         type: string
         pass-as: --dataset_type={v}
         description: train or test dataset
         default: train
-      - name: Image folder output folder
+      - name: img_folder_output_path
         type: string
         pass-as: --image_folder_output_path={v}
         description: Output folder of VH
-        default: train
+        default: /valohai/outputs/train_data/
