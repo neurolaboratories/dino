@@ -274,11 +274,11 @@ def train_dino(args):
             data_loader, optimizer, lr_schedule, wd_schedule, momentum_schedule,
             epoch, fp16_scaler, args)
 
-        print(
-            json.dumps({
-                'epoch': epoch,
-                'train_loss': dino_loss.total_loss.item()
-            }))
+        # print(
+        #     json.dumps({
+        #         'epoch': epoch,
+        #         'train_loss': dino_loss.total_loss.item()
+        #     }))
         # ============ writing logs ... ============
         save_dict = {
             'student': student.state_dict(),
@@ -356,6 +356,11 @@ def train_one_epoch(student, teacher, teacher_without_ddp, dino_loss, data_loade
 
         # logging
         torch.cuda.synchronize()
+        print(
+            json.dumps({
+                'epoch': epoch,
+                'train_loss': loss.item()
+            }))
         metric_logger.update(loss=loss.item())
         metric_logger.update(lr=optimizer.param_groups[0]["lr"])
         metric_logger.update(wd=optimizer.param_groups[0]["weight_decay"])
