@@ -11,6 +11,8 @@
     inputs:
       - name: data
         default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
+      - name: weights
+        default: https://valohaidatasets.blob.core.windows.net/valohai-datasets/ssl/pretrained-checkpoints/dino_deitsmall16_pretrain_full_checkpoint.pth
     parameters:
       - name: epochs
         type: integer
@@ -52,6 +54,14 @@
         pass-as: --arch={v}
         default: vit_small
         description: model architecture used for training.
+      - name: load_pretrained
+        type: flag
+        pass-as: --load_pretrained={v}
+        default: False
+      - name: checkpoint-pth
+        type: str
+        pass-as: --checkpoint-pth={v}
+        default: /valohai/inputs/weights/dino_deitsmall16_pretrain_full_checkpoint.pth
       - name: patch-size
         type: integer
         pass-as: --patch_size={v}

@@ -28,6 +28,7 @@ import torch.backends.cudnn as cudnn
 import torch.nn.functional as F
 from torchvision import datasets, transforms
 from torchvision import models as torchvision_models
+from yaml import load
 
 import utils
 import vision_transformer as vits
@@ -47,6 +48,10 @@ def get_args_parser():
                 + torchvision_archs ,#+ torch.hub.list("facebookresearch/xcit:main"),
         help="""Name of architecture to train. For quick experiments with ViTs,
         we recommend using vit_tiny or vit_small.""")
+    parser.add_argument("--load_pretrained", default=False, type=bool, required=False, help="Load weights from checkpoint")
+    
+    parser.add_argument("--checkpoint_pth", default=None, type=str, required=False, help="path to checkpoint to load")
+    
     parser.add_argument('--patch_size', default=16, type=int, help="""Size in pixels
         of input square patches - default 16 (for 16x16 patches). Using smaller
         values leads to better performance but requires more memory. Applies only
@@ -164,6 +169,11 @@ def train_dino(args):
             drop_path_rate=args.drop_path_rate,  # stochastic depth
         )
         teacher = vits.__dict__[args.arch](patch_size=args.patch_size)
+        if args.load_pretrained:
+            print(f"Load {args.arch} weights from pretrained checkpoint")
+            utils.load_pretrained_weights(student, args.checkpoint_pth, "student", args.arch, patch_size=args.patch_size)
+            utils.load_pretrained_weights(teacher, args.checkpoint_pth, "teacher", args.arch, patch_size=args.patch_size)
+                
         embed_dim = student.embed_dim
     # if the network is a XCiT
     elif args.arch in torch.hub.list("facebookresearch/xcit:main"):
@@ -176,6 +186,7 @@ def train_dino(args):
         student = torchvision_models.__dict__[args.arch]()
         teacher = torchvision_models.__dict__[args.arch]()
         embed_dim = student.fc.weight.shape[1]
+
     else:
         print(f"Unknow architecture: {args.arch}")
 
