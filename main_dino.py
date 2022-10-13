@@ -171,7 +171,7 @@ def train_dino(args):
         teacher = vits.__dict__[args.arch](patch_size=args.patch_size)
         if args.load_pretrained:
             print(f"Load {args.arch} weights from pretrained checkpoint")
-            utils.load_pretrained_weights(student, args.checkpoint_pth, "student", args.arch, patch_size=args.patch_size)
+            # utils.load_pretrained_weights(student, args.checkpoint_pth, "student", args.arch, patch_size=args.patch_size)
             utils.load_pretrained_weights(teacher, args.checkpoint_pth, "teacher", args.arch, patch_size=args.patch_size)
                 
         embed_dim = student.embed_dim
