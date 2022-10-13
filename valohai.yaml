@@ -59,7 +59,7 @@
         pass-as: --load_pretrained={v}
         default: False
       - name: checkpoint-pth
-        type: str
+        type: string
         pass-as: --checkpoint-pth={v}
         default: /valohai/inputs/weights/dino_deitsmall16_pretrain_full_checkpoint.pth
       - name: patch-size
