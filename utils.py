@@ -54,6 +54,7 @@ class GaussianBlur(object):
         )
 
 
+
 class Solarization(object):
     """
     Apply Solarization to the PIL image.
