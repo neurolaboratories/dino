@@ -72,6 +72,7 @@
         description: number of gpus for distributed training
       - name: local-crops-number
         type: integer
+        pass-as: --local_crops_number={v}
         default: 8
         description: number of local views used for training. Set to zero to disable multi-crop training.
 - step:
