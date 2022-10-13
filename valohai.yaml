@@ -60,7 +60,7 @@
         default: False
       - name: checkpoint-pth
         type: string
-        pass-as: --checkpoint-pth={v}
+        pass-as: --checkpoint_pth={v}
         default: /valohai/inputs/weights/dino_deitsmall16_pretrain_full_checkpoint.pth
       - name: patch-size
         type: integer
