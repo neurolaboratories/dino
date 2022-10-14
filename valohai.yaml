@@ -74,7 +74,7 @@
         type: integer
         pass-as: ----num_workers={v}
         default: 12
-        description: Num workers to load the dataset
+        description: Number of data loading workers per GPU.
 - step:
     name: convert_coco_to_image_folder
     image: neurolabszia.azurecr.io/valohai-zia-vision:phase3-multi-gpu-training-gpu
