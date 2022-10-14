@@ -457,6 +457,7 @@ class DataAugmentationDINO(object):
             transforms.RandomResizedCrop(224, scale=global_crops_scale, interpolation=Image.BICUBIC),
             flip_and_color_jitter,
             utils.GaussianBlur(1.0),
+            utils.CoarseDropout(),
             normalize,
         ])
         # second global crop
@@ -465,6 +466,7 @@ class DataAugmentationDINO(object):
             flip_and_color_jitter,
             utils.GaussianBlur(0.1),
             utils.Solarization(0.2),
+            utils.CoarseDropout(),
             normalize,
         ])
         # transformation for the local small crops

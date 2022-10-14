@@ -25,7 +25,7 @@ import random
 import datetime
 import subprocess
 from collections import defaultdict, deque
-
+import albumentations as A
 import numpy as np
 import torch
 from torch import nn
@@ -67,6 +67,27 @@ class Solarization(object):
             return ImageOps.solarize(img)
         else:
             return img
+
+################################################
+######## Neurolabs Custom augmentations ########
+################################################
+
+
+
+class CoarseDropout(object):
+    """_summary_
+    Args:
+        object (_type_): _description_
+    Returns:
+        _type_: _description_
+    """
+    def __init__(self, max_holes=8, max_height=8, max_width=8):
+  
+        self.transform = A.CoarseDropout(max_holes=max_holes, max_height=max_height, max_width=max_width)
+    def __call__(self, img):
+        return self.transform(img)['image']
+
+###############################################
 
 
 def load_pretrained_weights(model, pretrained_weights, checkpoint_key, model_name, patch_size):
