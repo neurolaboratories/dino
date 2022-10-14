@@ -85,7 +85,7 @@ class CoarseDropout(object):
   
         self.transform = A.CoarseDropout(max_holes=max_holes, max_height=max_height, max_width=max_width)
     def __call__(self, img):
-        return self.transform(img)['image']
+        return self.transform(image=img)['image']
 
 ###############################################
 
