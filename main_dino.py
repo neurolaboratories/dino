@@ -48,8 +48,8 @@ def get_args_parser():
                 + torchvision_archs ,#+ torch.hub.list("facebookresearch/xcit:main"),
         help="""Name of architecture to train. For quick experiments with ViTs,
         we recommend using vit_tiny or vit_small.""")
-    parser.add_argument("--load_pretrained", default=False, type=bool, required=False, help="Load weights from checkpoint")
-    
+    parser.add_argument("--load_teacher_weights", default=False, type=bool, required=False, help="Load teacher weights from checkpoint")
+    parser.add_argument("--load_student_weights", default=False, type=bool, required=False, help="load student weights from checkpoint")
     parser.add_argument("--checkpoint_pth", default=None, type=str, required=False, help="path to checkpoint to load")
     
     parser.add_argument('--patch_size', default=16, type=int, help="""Size in pixels
@@ -169,11 +169,11 @@ def train_dino(args):
             drop_path_rate=args.drop_path_rate,  # stochastic depth
         )
         teacher = vits.__dict__[args.arch](patch_size=args.patch_size)
-        if args.load_pretrained:
-            print(f"Load {args.arch} weights from pretrained checkpoint")
-            # utils.load_pretrained_weights(student, args.checkpoint_pth, "student", args.arch, patch_size=args.patch_size)
+        if args.load_teacher_weights:
             utils.load_pretrained_weights(teacher, args.checkpoint_pth, "teacher", args.arch, patch_size=args.patch_size)
-                
+        if args.load_student_weights:
+            utils.load_pretrained_weights(student, args.checkpoint_pth, "student", args.arch, patch_size=args.patch_size)     
+        
         embed_dim = student.embed_dim
     # if the network is a XCiT
     elif args.arch in torch.hub.list("facebookresearch/xcit:main"):

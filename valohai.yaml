@@ -54,10 +54,16 @@
         pass-as: --arch={v}
         default: vit_small
         description: model architecture used for training.
-      - name: load_pretrained
+      - name: load_teacher
         type: flag
-        pass-as: --load_pretrained={v}
+        pass-as: --load_teacher_weights={v}
         default: False
+        description: Load teacher weights from checkpoint
+      - name: load_student
+        type: flag
+        pass-as: --load_student_weights={v}
+        default: False
+        description: Load student weights from checkpoint
       - name: checkpoint-pth
         type: string
         pass-as: --checkpoint_pth={v}
