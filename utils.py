@@ -82,7 +82,7 @@ class CoarseDropout(object):
   
         self.transform = A.CoarseDropout(max_holes=max_holes, max_height=max_height, max_width=max_width)
     def __call__(self, img):
-        return Image.fromarray(self.transform(image=np.arrray(img))['image'])
+        return Image.fromarray(self.transform(image=np.array(img))['image'])
 
 ###############################################
 
