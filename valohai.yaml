@@ -70,6 +70,11 @@
         type: integer
         default: 1
         description: number of gpus for distributed training
+      - name: num_workers
+        type: integer
+        pass-as: ----num_workers={v}
+        default: 12
+        description: Num workers to load the dataset
 - step:
     name: convert_coco_to_image_folder
     image: neurolabszia.azurecr.io/valohai-zia-vision:phase3-multi-gpu-training-gpu
