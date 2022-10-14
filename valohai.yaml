@@ -72,7 +72,7 @@
         description: number of gpus for distributed training
       - name: num_workers
         type: integer
-        pass-as: ----num_workers={v}
+        pass-as: --num_workers={v}
         default: 12
         description: Number of data loading workers per GPU.
 - step:
