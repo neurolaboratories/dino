@@ -30,7 +30,7 @@ import numpy as np
 import torch
 from torch import nn
 import torch.distributed as dist
-from PIL import ImageFilter, ImageOps
+from PIL import ImageFilter, ImageOps, Image
 
 
 class GaussianBlur(object):
@@ -75,17 +75,14 @@ class Solarization(object):
 
 
 class CoarseDropout(object):
-    """_summary_
-    Args:
-        object (_type_): _description_
-    Returns:
-        _type_: _description_
+    """
+    Apply CoarseDropout to PIL Image.
     """
     def __init__(self, max_holes=8, max_height=8, max_width=8):
   
         self.transform = A.CoarseDropout(max_holes=max_holes, max_height=max_height, max_width=max_width)
     def __call__(self, img):
-        return self.transform(image=img)['image']
+        return Image.fromarray(self.transform(image=np.arrray(img))['image'])
 
 ###############################################
 
