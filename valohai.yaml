@@ -40,7 +40,7 @@
         default: 0.07
         description: Teacher temperature
       - name: warmup_teacher_temp_epochs
-        type: int
+        type: integer
         pass-as: --warmup_teacher_temp_epochs={v}
         default: 30
         description: Warmup Teacher temperature
