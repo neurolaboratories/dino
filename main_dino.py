@@ -121,6 +121,7 @@ def get_args_parser():
     parser.add_argument('--data_path', default='/path/to/imagenet/train/', type=str,
         help='Please specify path to the ImageNet training data.')
     parser.add_argument('--output_dir', default=".", type=str, help='Path to save logs and checkpoints.')
+    parser.add_argument('--resume_dir', default=".", type=str, help='Path to resume checkpoints.')
     parser.add_argument('--saveckp_freq', default=20, type=int, help='Save checkpoint every x epochs.')
     parser.add_argument('--seed', default=0, type=int, help='Random seed.')
     parser.add_argument('--num_workers', default=10, type=int, help='Number of data loading workers per GPU.')
@@ -166,13 +167,6 @@ def train_dino(args):
         )
         teacher = vits.__dict__[args.arch](patch_size=args.patch_size)
         embed_dim = student.embed_dim
-    # if the network is a XCiT
-    # elif args.arch in torch.hub.list("facebookresearch/xcit:main"):
-    #     student = torch.hub.load('facebookresearch/xcit:main', args.arch,
-    #                              pretrained=False, drop_path_rate=args.drop_path_rate)
-    #     teacher = torch.hub.load('facebookresearch/xcit:main', args.arch, pretrained=False)
-    #     embed_dim = student.embed_dim
-    # otherwise, we check if the architecture is in torchvision models
     elif args.arch in torchvision_models.__dict__.keys():
         student = torchvision_models.__dict__[args.arch]()
         teacher = torchvision_models.__dict__[args.arch]()
@@ -258,7 +252,7 @@ def train_dino(args):
     # ============ optionally resume training ... ============
     to_restore = {"epoch": 0}
     utils.restart_from_checkpoint(
-        os.path.join(args.output_dir, "checkpoint.pth"),
+        os.path.join(args.resume_dir),
         run_variables=to_restore,
         student=student,
         teacher=teacher,

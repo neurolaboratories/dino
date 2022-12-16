@@ -11,6 +11,8 @@
     inputs:
       - name: data
         default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
+      - name: model
+        default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
     parameters:
       - name: epochs
         type: integer
@@ -42,6 +44,11 @@
         pass-as: --data_path={v}
         description: path to input data.
         default: /valohai/inputs/data/dataset/train
+      - name: resume-dir
+        type: string
+        pass-as: --resume_dir={v}
+        description: path to resuming checkpoint directory.
+        default: /valohai/inputs/model/checkpoint0100.pth
       - name: output-dir
         type: string
         pass-as: --output_dir={v}
