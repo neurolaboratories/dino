@@ -152,6 +152,7 @@ def train_dino(args):
         num_workers=args.num_workers,
         pin_memory=True,
         drop_last=True,
+        persistent_workers=True
     )
     print(f"Data loaded: there are {len(dataset)} images.")
 
