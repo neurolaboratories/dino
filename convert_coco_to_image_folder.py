@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 path_to_coco = Path(args.coco_dataset_path)
 
-coco_json_filenames = ["coco_train.json", "coco_val.json"]
+coco_json_filenames = ["coco.json"]
 output_folder = "train"
 
 if args.dataset_type == "all":
