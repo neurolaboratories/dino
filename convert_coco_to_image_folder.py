@@ -48,7 +48,7 @@ for coco_json_filename in coco_json_filenames:
         category_name = category_id_to_name_dict[annotation["category_id"]]
         image_filename = Path(image_id_to_name_dict[annotation["image_id"]])
 
-        image_crop = Image.open(path_to_coco / "img" / image_filename).crop(
+        image_crop = Image.open(path_to_coco / "images" / image_filename).crop(
             (coco_bbox[0], coco_bbox[1], coco_bbox[0] + coco_bbox[2], coco_bbox[1] + coco_bbox[3])
         )
 
