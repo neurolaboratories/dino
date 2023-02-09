@@ -21,7 +21,7 @@ if args.dataset_type == "all":
     coco_json_filenames = ["coco_all.json"]
 
 if args.dataset_type == "test":
-    coco_json_filenames = ["coco_test.json"]
+    coco_json_filenames = ["coco_deformables.json"]
     output_folder = "test"
 
 dataset_ouptut_path = Path(args.image_folder_output_path)
@@ -52,5 +52,5 @@ for coco_json_filename in coco_json_filenames:
             (coco_bbox[0], coco_bbox[1], coco_bbox[0] + coco_bbox[2], coco_bbox[1] + coco_bbox[3])
         )
 
-        (dataset_ouptut_path / output_folder / category_name).mkdir(parents=True, exist_ok=True)
-        image_crop.save(dataset_ouptut_path / output_folder / category_name / (category_name + "_" + str(annotation["id"]) + image_filename.suffix))
+        (dataset_ouptut_path / output_folder / 'object').mkdir(parents=True, exist_ok=True)
+        image_crop.save(dataset_ouptut_path / output_folder / 'object' / (category_name + "_" + str(annotation["id"]) + image_filename.suffix))
