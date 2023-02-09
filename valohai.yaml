@@ -103,3 +103,8 @@
         pass-as: --image_folder_output_path={v}
         description: Output folder of VH
         default: /valohai/outputs/train_data/
+      - name: coco_file_name
+        type: string
+        pass-as: --coco_file_name={v}
+        description: Coco file name
+        default: coco.json

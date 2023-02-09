@@ -9,20 +9,14 @@ parser = argparse.ArgumentParser(description="Convert COCO dataset to ImageFolde
 parser.add_argument("--coco_dataset_path", type=str)
 parser.add_argument("--dataset_type", type=str, choices=["train", "test", "all"])
 parser.add_argument("--image_folder_output_path", type=str)
+parser.add_argument("--coco_file_name", type=str)
 
 args = parser.parse_args()
 
 path_to_coco = Path(args.coco_dataset_path)
 
-coco_json_filenames = ["coco_deformables.json"]
+coco_json_filenames = [args.coco_file_name]
 output_folder = "train"
-
-if args.dataset_type == "all":
-    coco_json_filenames = ["coco_all.json"]
-
-if args.dataset_type == "test":
-    coco_json_filenames = ["coco_deformables.json"]
-    output_folder = "test"
 
 dataset_ouptut_path = Path(args.image_folder_output_path)
 
