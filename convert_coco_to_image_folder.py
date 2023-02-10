@@ -21,6 +21,7 @@ for elem in list(path_to_coco.iterdir()):
     if ".json" in str(elem):
         final_coco_path = elem
 output_folder = "train"
+print(final_coco_path)
 
 dataset_ouptut_path = Path(args.image_folder_output_path)
 
