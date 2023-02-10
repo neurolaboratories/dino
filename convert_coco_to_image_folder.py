@@ -15,14 +15,14 @@ args = parser.parse_args()
 
 path_to_coco = Path(args.coco_dataset_path)
 
-coco_json_filenames = [args.coco_file_name]
+coco_json_paths = list(path_to_coco.iterdir())
 output_folder = "train"
 
 dataset_ouptut_path = Path(args.image_folder_output_path)
 
-for coco_json_filename in coco_json_filenames:
+for coco_json_path in coco_json_paths:
 
-    with open(path_to_coco / coco_json_filename, "r") as coco_file:
+    with open(coco_json_path, "r") as coco_file:
         coco_json = json.load(coco_file)
 
     category_id_to_name_dict = {}
