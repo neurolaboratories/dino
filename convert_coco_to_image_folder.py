@@ -15,11 +15,13 @@ args = parser.parse_args()
 
 path_to_coco = Path(args.coco_dataset_path)
 
+final_coco_path = path_to_coco / args.coco_file_name
+
 # coco_json_paths = list(path_to_coco.iterdir())
-final_coco_path = None
-for elem in list(path_to_coco.iterdir()):
-    if ".json" in str(elem):
-        final_coco_path = elem
+# final_coco_path = None
+# for elem in list(path_to_coco.iterdir()):
+#     if ".json" in str(elem):
+#         final_coco_path = elem
 output_folder = "train"
 print(final_coco_path)
 
@@ -36,7 +38,9 @@ image_id_to_name_dict = {}
 for image in coco_json["images"]:
     image_id_to_name_dict[image["id"]] = image["file_name"]
 
-for annotation in coco_json["annotations"]:
+for i, annotation in enumerate(coco_json["annotations"]):
+    if (i % 500) == 0:
+        print(i)
     coco_bbox = annotation["bbox"]
 
     if coco_bbox[2] == 0.0 or coco_bbox[3] == 0.0:
