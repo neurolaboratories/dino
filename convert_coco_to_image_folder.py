@@ -41,6 +41,8 @@ for image in coco_json["images"]:
 for i, annotation in enumerate(coco_json["annotations"]):
     if (i % 500) == 0:
         print(i)
+    if i == 100000:
+        break
     coco_bbox = annotation["bbox"]
 
     if coco_bbox[2] == 0.0 or coco_bbox[3] == 0.0:
