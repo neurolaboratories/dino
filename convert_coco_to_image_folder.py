@@ -10,6 +10,7 @@ parser.add_argument("--coco_dataset_path", type=str)
 parser.add_argument("--dataset_type", type=str, choices=["train", "test", "all"])
 parser.add_argument("--image_folder_output_path", type=str)
 parser.add_argument("--coco_file_name", type=str)
+parser.add_argument("--object", type=bool, default=False)
 
 args = parser.parse_args()
 
@@ -55,5 +56,9 @@ for i, annotation in enumerate(coco_json["annotations"]):
         (coco_bbox[0], coco_bbox[1], coco_bbox[0] + coco_bbox[2], coco_bbox[1] + coco_bbox[3])
     )
 
-    (dataset_ouptut_path / output_folder / 'object').mkdir(parents=True, exist_ok=True)
-    image_crop.save(dataset_ouptut_path / output_folder / 'object' / (category_name + "_" + str(annotation["id"]) + image_filename.suffix))
+    if args.object: 
+        (dataset_ouptut_path / output_folder / 'object').mkdir(parents=True, exist_ok=True)
+        image_crop.save(dataset_ouptut_path / output_folder / 'object' / (category_name + "_" + str(annotation["id"]) + image_filename.suffix))
+    else: 
+        (dataset_ouptut_path / output_folder / category_name).mkdir(parents=True, exist_ok=True)
+        image_crop.save(dataset_ouptut_path / output_folder / category_name / (category_name + "_" + str(annotation["id"]) + image_filename.suffix))
