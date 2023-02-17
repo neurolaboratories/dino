@@ -7,7 +7,7 @@
       - mkdir /valohai/outputs/models/
       - python untar_archives.py --input_path /valohai/inputs/data
       - python -m torch.distributed.launch --nproc_per_node={parameter-value:num_gpus} main_dino.py {parameters}
-    
+
     inputs:
       - name: data
         default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
@@ -31,7 +31,7 @@
         type: float
         pass-as: --min_lr={v}
         default: 0.000001
-        description: Target LR at the end of optimization. We use a cosine LR schedule with linear warmup    
+        description: Target LR at the end of optimization. We use a cosine LR schedule with linear warmup
       - name: optimizer
         type: string
         pass-as: --optimizer={v}
@@ -86,7 +86,7 @@
     inputs:
       - name: dataset
         default: gs://valohai-datasets/syn/3dmodels/fruits-and-friends-revised.tar.gz
-    
+
     parameters:
       - name: data_path
         type: string
@@ -98,6 +98,11 @@
         pass-as: --dataset_type={v}
         description: train or test dataset
         default: train
+      - name: object
+        type: flag
+        pass-as: --object={v}
+        description: whether to leave category name or object
+        default: False
       - name: img_folder_output_path
         type: string
         pass-as: --image_folder_output_path={v}
