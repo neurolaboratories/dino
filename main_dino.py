@@ -183,7 +183,7 @@ def train_dino(args):
         args.out_dim,
         use_bn=args.use_bn_in_head,
         norm_last_layer=args.norm_last_layer,
-    ))
+    ), arch=args.arch)
     teacher = utils.MultiCropWrapper(
         teacher,
         DINOHead(embed_dim, args.out_dim, args.use_bn_in_head),
