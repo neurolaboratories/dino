@@ -13,6 +13,7 @@ def untar_archives(input_path: Path, output_path: Path):
         tar = tarfile.open(input_path / archive, "r:gz")
         tar.extractall(output_path)
         tar.close()
+    for archive in archives:
         os.remove(input_path / archive)
 
 
