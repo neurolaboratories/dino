@@ -316,7 +316,7 @@ def train_dino(args):
         student = torchvision_models.__dict__[args.arch]()
         teacher = torchvision_models.__dict__[args.arch]()
         if "efficientnet" in args.arch:
-            embed_dim = student.classifier[1].weight.shape[0]
+            embed_dim = student.classifier[1].in_features
         else:
             embed_dim = student.fc.weight.shape[1]
     else:
